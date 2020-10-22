@@ -7,7 +7,7 @@
 
 <BorderPane prefHeight="800" prefWidth="1400" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <right>
-      <Canvas height="800.0" width="800.0" BorderPane.alignment="CENTER" />
+      <Canvas height="800.0" onMouseClicked="#canvasClicked" width="800.0" BorderPane.alignment="CENTER" />
    </right>
    <left>
       <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="800.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -16,7 +16,7 @@
                <children>
                   <VBox prefHeight="150.0" prefWidth="500.0">
                      <children>
-                        <ColorPicker fx:id="colorpicker" prefHeight="31.0" prefWidth="232.0">
+                        <ColorPicker fx:id="colorpicker" prefHeight="100.0" prefWidth="250.0">
                            <VBox.margin>
                               <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                            </VBox.margin></ColorPicker>
@@ -33,6 +33,11 @@
                                  </HBox.margin>
                               </Label>
                            </children></HBox>
+                        <ComboBox fx:id="comboBoxFigure" onAction="#setFigure" prefHeight="100.0" prefWidth="250.0">
+                           <VBox.margin>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </VBox.margin>
+                        </ComboBox>
                      </children>
                      <padding>
                         <Insets left="20.0" top="20.0" />

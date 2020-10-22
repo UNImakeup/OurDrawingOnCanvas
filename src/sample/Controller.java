@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.event.ActionEvent;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -18,6 +20,8 @@ public class Controller {
     public ColorPicker colorpicker;
     public Label labelPenSize;
     public ComboBox<Figure> comboBoxFigure;
+    public Canvas canvas;
+    private GraphicsContext graphicsContext;
 
     ArrayList<Figure> canvasFigures = new ArrayList<>();
     Figure activeFigure;
@@ -29,6 +33,7 @@ public class Controller {
 
         comboBoxFigure.getItems().addAll(new Line(), new Circle(), new Square());
 
+        graphicsContext = canvas.getGraphicsContext2D();
     }
 
     public void setPenSize(MouseEvent mouseEvent) {
@@ -55,6 +60,7 @@ public class Controller {
                 System.out.println("activeFigure start point is: " + activeFigure.start.toString());
                 System.out.println("and end point is: " + activeFigure.end.toString());
                 canvasFigures.add(activeFigure);
+                drawActiveFigure(activeFigure);
                 activeFigure = null;
             }
         }
@@ -68,5 +74,10 @@ public class Controller {
             alert.showAndWait();
         }
 
+    }
+
+    private void drawActiveFigure(Figure activeFigure) {
+        graphicsContext.setStroke(colorpicker.getValue());
+        activeFigure.draw(graphicsContext);
     }
 }

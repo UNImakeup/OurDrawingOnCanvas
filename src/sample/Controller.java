@@ -1,5 +1,7 @@
 package sample;
 
+import QuoteMachine.Quote;
+import QuoteMachine.QuoteMachine;
 import javafx.event.ActionEvent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -21,6 +23,8 @@ public class Controller {
     public Label labelPenSize;
     public ComboBox<Figure> comboBoxFigure;
     public Canvas canvas;
+    public Label quoteText;
+    public Label quoteTextSource;
     private GraphicsContext graphicsContext;
 
     ArrayList<Figure> canvasFigures = new ArrayList<>();
@@ -34,6 +38,20 @@ public class Controller {
         comboBoxFigure.getItems().addAll(new Line(), new Circle(), new Square());
 
         graphicsContext = canvas.getGraphicsContext2D();
+
+         QuoteMachine quoteMachine = new QuoteMachine();
+
+         QuoteUpdater quoteUpdater  = new QuoteUpdater(this, quoteMachine);
+         Runnable target;
+         Thread t = new Thread(quoteUpdater);
+         t.start();
+
+    }
+
+    public void updateQuote(String quote, String source)
+    {
+        quoteText.setText(quote);
+        quoteTextSource.setText(source);
     }
 
     public void setPenSize(MouseEvent mouseEvent) {

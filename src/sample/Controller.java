@@ -98,4 +98,8 @@ public class Controller {
         graphicsContext.setStroke(colorpicker.getValue());
         activeFigure.draw(graphicsContext);
     }
+
+    public void clearCanvas(ActionEvent actionEvent) {
+        graphicsContext.clearRect(0,0, canvas.getWidth(), canvas.getHeight());
+    }
 }

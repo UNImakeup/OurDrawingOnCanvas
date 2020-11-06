@@ -15,6 +15,9 @@ import sample.Figure.Square;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 public class Controller {
 
@@ -62,27 +65,46 @@ public class Controller {
 
     }
 
-    public void canvasClicked(MouseEvent mouseEvent) {
-        System.out.println("CanvasClick " + mouseEvent.getX() + ":"+mouseEvent.getY());
+    public void canvasClicked(MouseEvent mouseEvent)  {
+        System.out.println("CanvasClick " + mouseEvent.getX() + ":" + mouseEvent.getY());
+        //Timer T = new Timer();
 
-        System.out.println(comboBoxFigure.getValue());
-        if (comboBoxFigure.getValue() != null) {
-            if (activeFigure == null) {
-                activeFigure = comboBoxFigure.getValue().getCopy();
-                activeFigure.start = new Point((int) mouseEvent.getX(), (int) mouseEvent.getY());
-                System.out.println("activefigure start point: " + activeFigure.start.toString());
-            }
-            else
-            {
-                activeFigure.end = new Point((int) mouseEvent.getX(), (int) mouseEvent.getY());
-                System.out.println("activeFigure start point is: " + activeFigure.start.toString());
-                System.out.println("and end point is: " + activeFigure.end.toString());
-                canvasFigures.add(activeFigure);
-                drawActiveFigure(activeFigure);
-                activeFigure = null;
-            }
+        //System.out.println(comboBoxFigure.getValue());
+        //if (comboBoxFigure.getValue() != null) {
+        //comboBoxFigure.setValue();
+        if (activeFigure == null) {
+            //activeFigure = comboBoxFigure.getValue().getCopy();
+            activeFigure = new Circle();
+            activeFigure.start = new Point((int) mouseEvent.getX(), (int) mouseEvent.getY());
+            System.out.println("activefigure start point: " + activeFigure.start.toString());
+        } else {
+            activeFigure.end = new Point((int) mouseEvent.getX(), (int) mouseEvent.getY());
+            System.out.println("activeFigure start point is: " + activeFigure.start.toString());
+            System.out.println("and end point is: " + activeFigure.end.toString());
+            canvasFigures.add(activeFigure);
+            drawActiveFigure(activeFigure);
+            activeFigure = null;
         }
-        else
+        //Thread.sleep(3000);
+        //TimeUnit.SECONDS.sleep(4);
+        //Thread.sleep(3000);
+
+        //graphicsContext.clearRect(0,0, canvas.getWidth(), canvas.getHeight());
+
+        TimerTask task= new TimerTask() {
+            @Override
+            public void run() {
+                graphicsContext.clearRect(0,0, canvas.getWidth(), canvas.getHeight());
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, 3000);
+
+
+
+
+        //}
+        /*else
         {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Uuups!");
@@ -92,12 +114,15 @@ public class Controller {
             alert.showAndWait();
         }
 
+         */
+
     }
 
     private void drawActiveFigure(Figure activeFigure) {
         graphicsContext.setStroke(colorpicker.getValue());
         activeFigure.draw(graphicsContext);
     }
+
 
     public void clearCanvas(ActionEvent actionEvent) {
         graphicsContext.clearRect(0,0, canvas.getWidth(), canvas.getHeight());
